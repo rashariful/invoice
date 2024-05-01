@@ -8,7 +8,7 @@ const InvoiceItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
 
   return (
     <tr>
-      <td className="w-full bg-gray-100 p-2 rounded-md">
+      <td className="w-full rounded-md">
         <InvoiceField
           onEditItem={(event) => onEdtiItem(event)}
           cellData={{
@@ -17,11 +17,11 @@ const InvoiceItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
             name: "name",
             id: id,
             value: name,
-            className:"",
+            className: "p-2",
           }}
         />
       </td>
-      <td className="min-w-[65px] md:min-w-[80px] bg-gray-100 p-2 rounded-md">
+      <td className="min-w-[65px] md:min-w-[80px] rounded-md">
         <InvoiceField
           onEditItem={(event) => onEdtiItem(event)}
           cellData={{
@@ -30,10 +30,11 @@ const InvoiceItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
             name: "qty",
             id: id,
             value: qty,
+            className: "p-2",
           }}
         />
       </td>
-      <td className="relative min-w-[100px] md:min-w-[150px] bg-gray-100 p-2 rounded-md my-8">
+      <td className="relative min-w-[100px] md:min-w-[150px] rounded-md my-8">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="absolute left-2 top-1/2 h-6 w-6 -translate-y-1/2 text-gray-400 sm:left-4"
@@ -51,13 +52,14 @@ const InvoiceItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
         <InvoiceField
           onEditItem={(event) => onEdtiItem(event)}
           cellData={{
-            className: "text-right",
+            className: "text-right p-2",
             type: "number",
             min: "0.01",
             step: "0.01",
             name: "price",
             id: id,
             value: price,
+            
           }}
         />
       </td>

@@ -12,19 +12,19 @@ const today = date.toLocaleDateString('en-GB', {
 
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [discount, setDiscount] = useState('');
-  const [deliveryCharge, setDeliveryCharge] = useState('');
-  const [partialAmount, setPartialAmount] = useState('');
-  const [tax, setTax] = useState('');
+  // const [discount, setDiscount] = useState("");
+  const [deliveryCharge, setDeliveryCharge] = useState("");
+  const [partialAmount, setPartialAmount] = useState("");
+  // const [tax, setTax] = useState('');
   const [invoiceNumber, setInvoiceNumber] = useState(1);
-  const [cashierName, setCashierName] = useState('');
-  const [customerName, setCustomerName] = useState('');
+  const [cashierName, setCashierName] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [items, setItems] = useState([
     {
       id: uid(6),
-      name: '',
+      name: "",
       qty: 1,
-      price: '1.00',
+      price: "1.00",
     },
   ]);
 
@@ -38,9 +38,9 @@ const InvoiceForm = () => {
     setItems([
       {
         id: uid(6),
-        name: '',
+        name: "",
         qty: 1,
-        price: '1.00',
+        price: "1.00",
       },
     ]);
   };
@@ -51,9 +51,9 @@ const InvoiceForm = () => {
       ...prevItem,
       {
         id: id,
-        name: '',
+        name: "",
         qty: 1,
-        price: '1.00',
+        price: "1.00",
       },
     ]);
   };
@@ -86,13 +86,15 @@ const InvoiceForm = () => {
       return prev + Number(curr.price * Math.floor(curr.qty));
     else return prev;
   }, 0);
-  const taxRate = (tax * subtotal) / 100;
-  const discountRate = (discount * subtotal) / 100;
-  const total = subtotal - discountRate + taxRate;
+  // const taxRate = (tax * subtotal) / 100;
+  // const discountRate = (discount * subtotal) / 100;
+    const delivery = parseFloat(deliveryCharge);
+    const partial = parseFloat(partialAmount);
+  // const total = subtotal - discountRate + taxRate;
+   const total = subtotal + delivery ;
 
-  const delivery = parseFloat(deliveryCharge);
-  const partial = parseFloat(partialAmount);
-  const totalAll = total - partial + delivery;
+
+  const totalAll = total - partial;
 
   return (
     <form
@@ -197,29 +199,33 @@ const InvoiceForm = () => {
             <span>${deliveryCharge || "00.0"}</span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
-            <span className="font-bold">Persial Amount:</span>
-            <span>${partialAmount || "00.0"}</span>
+            <span className="font-bold">Total:</span>
+            <span>${total || "00.0"}</span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
+            <span className="font-bold">Paid:</span>
+            <span>${partialAmount || "00.0"}</span>
+          </div>
+          {/* <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Discount:</span>
             <span>
               ({discount || "0"}%)${discountRate.toFixed(2)}
             </span>
-          </div>
-          <div className="flex w-full justify-between md:w-1/2">
+          </div> */}
+          {/* <div className="flex w-full justify-between md:w-1/2">
             <span className="font-bold">Tax:</span>
             <span>
               ({tax || "0"}%)${taxRate.toFixed(2)}
             </span>
-          </div>
+          </div> */}
           <div className="flex w-full justify-between border-t border-gray-900/10 pt-2 md:w-1/2">
-            <span className="font-bold">Total:</span>
+            <span className="font-bold">Due:</span>
             <span className="font-bold">
               $
               {totalAll
                 ? totalAll % 1 === 0
                   ? totalAll
-                  : totalAll.toFixed(2)
+                  : totalAll.toFixed(0)
                 : "0.00"}
             </span>
           </div>
@@ -241,15 +247,18 @@ const InvoiceForm = () => {
               cashierName,
               customerName,
               subtotal,
-              taxRate,
-              discountRate,
+              // taxRate,
+              // discountRate,
+              delivery,
+              partial,
               total,
+              totalAll,
             }}
             items={items}
             onAddNextInvoice={addNextInvoiceHandler}
           />
           <div className="space-y-4 py-2">
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <label className="text-sm font-bold md:text-base" htmlFor="tax">
                 Tax rate:
               </label>
@@ -269,8 +278,8 @@ const InvoiceForm = () => {
                   %
                 </span>
               </div>
-            </div>
-            <div className="space-y-2">
+            </div> */}
+            {/* <div className="space-y-2">
               <label
                 className="text-sm font-bold md:text-base"
                 htmlFor="discount"
@@ -293,7 +302,7 @@ const InvoiceForm = () => {
                   %
                 </span>
               </div>
-            </div>
+            </div> */}
             <div className="space-y-2">
               <label
                 className="text-sm font-bold md:text-base"
@@ -323,7 +332,7 @@ const InvoiceForm = () => {
                 className="text-sm font-bold md:text-base"
                 htmlFor="discount"
               >
-                Persial Amount:
+                Paid Amount:
               </label>
               <div className="flex items-center">
                 <input

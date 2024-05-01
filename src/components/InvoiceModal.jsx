@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import  { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
@@ -164,21 +164,33 @@ const InvoiceModal = ({
                       <span className="font-bold">Subtotal:</span>
                       <span>${invoiceInfo.subtotal.toFixed(2)}</span>
                     </div>
-                    <div className="flex w-full justify-between">
+                    <div className="flex w-full justify-between border-t border-black/10 pt-2">
+                      <span className="font-bold">Delivery Charge:</span>
+                      <span>${invoiceInfo.delivery.toFixed(2)}</span>
+                    </div>
+                    <div className="flex w-full justify-between border-t border-black/10 pt-2">
+                      <span className="font-bold">Total:</span>
+                      <span>${invoiceInfo.total.toFixed(2)}</span>
+                    </div>
+                    <div className="flex w-full justify-between border-t border-black/10 pt-2">
+                      <span className="font-bold">Paid:</span>
+                      <span>${invoiceInfo.partial.toFixed(2)}</span>
+                    </div>
+                    {/* <div className="flex w-full justify-between">
                       <span className="font-bold">Discount:</span>
                       <span>${invoiceInfo.discountRate.toFixed(2)}</span>
                     </div>
                     <div className="flex w-full justify-between">
                       <span className="font-bold">Tax:</span>
                       <span>${invoiceInfo.taxRate.toFixed(2)}</span>
-                    </div>
+                    </div> */}
                     <div className="flex w-full justify-between border-t border-black/10 py-2">
-                      <span className="font-bold">Total:</span>
+                      <span className="font-bold">Due:</span>
                       <span className="font-bold">
                         $
-                        {invoiceInfo.total % 1 === 0
-                          ? invoiceInfo.total
-                          : invoiceInfo.total.toFixed(2)}
+                        {invoiceInfo.totalAll % 1 === 0
+                          ? invoiceInfo.totalAll
+                          : invoiceInfo.totalAll.toFixed(0)}
                       </span>
                     </div>
                   </div>
